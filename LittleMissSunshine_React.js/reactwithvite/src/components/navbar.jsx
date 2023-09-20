@@ -17,7 +17,7 @@ const NavBar = () => {
             <span className="navbar-toggler-icon"></span>
           </button>
           <a className="navbar-brand" href="#" id="kBrand">
-            My To do's
+            My To dos
           </a>
 
           <div className="dropdown ms-auto">
