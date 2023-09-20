@@ -9,6 +9,8 @@ const DynamicCards = () => {
         <h3 className="h3 p-1">My to-dos</h3>
       </div>
    <CardData />
+   <CardData />
+   <CardData />
     </section>
     </>
   );

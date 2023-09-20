@@ -1,6 +1,16 @@
 {/*Nora*/}
+import {useState} from 'react';
 
 const Form = () => {
+  const [show, setShow] = useState(true);
+  
+  const toggleSuccessAlert = () => {
+    setShow(false);
+    setTimeout(() => {
+     setShow(true);
+    }, 2000);
+  }
+
   return (
     <>
       <section>
@@ -26,7 +36,7 @@ const Form = () => {
                 type="date"
                 className="form-control"
                 id="exampleFormControlInput1"
-                value=""
+                value={''}
               />
             </div>
             <div className="mb-2 mx-5">
@@ -60,6 +70,7 @@ const Form = () => {
               <button
                 type="button"
                 className="btn btn-success px-3"
+                onClick = {toggleSuccessAlert}
               >
                 + Add
               </button>
@@ -69,15 +80,18 @@ const Form = () => {
             </div>
             <div
               id="alertDiv"
-              className="d-flex flex-row justify-content-center mt-2 p-1"
+              className={`d-flex flex-row justify-content-center mt-2 p-1      
+              ${show ? 'd-none' : ''}
+              `}
               style={{ color: "white" }}
             >
               <p
-                className="text-bg-success"
+                className="text-bg-success p-1"
                 id="successAlert"
-                style={{ fontSize: "0.8rem" }}
+                style={{ fontSize: "0.7rem" }}
               >
-                &check; You have successfully added a to-Do
+                <i className="bi bi-check-square"></i>
+                &nbsp; Your to-Do has been successfully added 
               </p>
             </div>
           </div>
