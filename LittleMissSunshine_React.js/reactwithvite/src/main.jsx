@@ -1,14 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './App.jsx';
 import './index.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootswatch/dist/cosmo/bootstrap.min.css'; 
-import MainApp from './mainapp.jsx';
+import App from './app.jsx';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <MainApp />
     <App />
-  </React.StrictMode>,
+  </React.StrictMode>
+   
+   
 )
