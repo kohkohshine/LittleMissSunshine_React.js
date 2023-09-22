@@ -1,6 +1,6 @@
 {/*Harun*/}
 
-const CardData = () => {
+const CardData = ({toDo}) => {
     return (
         <>
 {/* Card example */}
@@ -8,15 +8,14 @@ const CardData = () => {
 <div className="card-body" style={{ minWidth: '50rem' }}>
   <div className="d-flex justify-content-end">
     <p className="p-0 hDate" style={{ fontSize: '10px' }}>
-      01/08/2023
+      {toDo.date}
     </p>
   </div>
   <h5 className="card-title" style={{ marginTop: '-1.5rem' }}>
-    Card title:
+    {toDo.title}
   </h5>
   <p className="card-text">
-    Some quick example text to build on the card title and make up the
-    bulk of the s content.
+{toDo.todo}
   </p>
   <div className="gap-1 hIcons">
     <button className="btn btn-primary d-none" type="button" style={{ fontSize: '1.2rem' }}>

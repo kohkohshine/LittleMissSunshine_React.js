@@ -1,6 +1,24 @@
 {/*Nora*/}
+import {useState} from 'react';
 
 const Form = () => {
+  const [date, setDate] = useState('');
+  const [title, setTitle] = useState('');
+  const [toDo, setToDo] = useState('');
+  const handleClick = (e) => {
+    e.preventDefault();
+    resetForm();
+  };
+  const resetForm = () => {
+    setDate('');
+    setTitle('');
+    setToDo('');
+  }
+  
+  const handleData = (currentToDos) => {
+    [...currentToDos, {date, title, toDo}]
+  }
+
   return (
     <>
       <section>
@@ -24,9 +42,11 @@ const Form = () => {
               </label>
               <input
                 type="date"
+                name="date"
                 className="form-control"
                 id="exampleFormControlInput1"
-                value=""
+                value={date}
+                onChange={(e)=>setDate(e.target.value)}
               />
             </div>
             <div className="mb-2 mx-5">
@@ -35,10 +55,12 @@ const Form = () => {
               </label>
               <input
                 type="text"
+                name="title"
                 className="form-control"
                 id="exampleFormControlInput2"
                 placeholder="Birthday-to-do"
-                value=""
+                value={title}
+                onChange={(e)=>setTitle(e.target.value)}
               />
             </div>
             <div className="mb-2 mx-5">
@@ -49,17 +71,21 @@ const Form = () => {
                 ToDo
               </label>
               <textarea
+                name="toDo"
                 className="form-control"
                 id="exampleFormControlTextarea1"
                 rows="3"
                 placeholder="Bake Cake/ Get Confetti/..."
-                value=""
+                value={toDo}
+                onChange={(e)=>setToDo(e.target.value)}
               ></textarea>
             </div>
             <div className="mx-5 d-flex flex-row gap-2" id="buttonAppear">
               <button
                 type="button"
                 className="btn btn-success px-3"
+                //ender what should happen when toggled
+                onClick={handleClick}
               >
                 + Add
               </button>
