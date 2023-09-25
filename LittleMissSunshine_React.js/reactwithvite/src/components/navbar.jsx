@@ -1,5 +1,3 @@
-{/*Kimberly*/}
-
 const NavBar = () => {
   return (
     <> 

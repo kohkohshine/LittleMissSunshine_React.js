@@ -1,13 +1,84 @@
-{/*Nora*/}
+import { useState, useEffect } from 'react';
+import PropTypes from 'prop-types'; 
 
-const Form = () => {
+const Form = (props) => {
+   
+const [showAlert, setShowAlert] = useState(true);
+const [showError, setShowError] = useState(true);
+const [toDo, setToDo] = useState('');
+const [date, setDate] = useState('');
+const [title, setTitle] = useState('');
+const [formData, setFormData] = useState([]);
+
+
+  const toggleSuccessAlert = () => {
+    setShowAlert(false);
+    setTimeout(() => {
+      setShowAlert(true);
+    }, 2000);
+  };
+
+  const toggleErrorAlert = () => {
+    setShowError(false);
+    setTimeout(() => {
+      setShowError(true);
+    }, 2000);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const randomId = crypto.randomUUID();
+    const data = {
+      id: randomId,
+      date,
+      title,
+      toDo,
+      doneCard: false,
+      undoCard: false,
+      editCard: false,
+      deleteCard: false,
+      saveCard: false,
+    };
+    if (!date || !title || !toDo) {
+      toggleErrorAlert();
+    } else {
+      toggleSuccessAlert();
+      setFormData([...formData, data]); // Update the formData state
+      const updatedForm = JSON.stringify([...formData, data]);
+      console.log('updatedForm:', updatedForm); 
+      localStorage.setItem('formData', updatedForm);
+      setDate('');
+      setTitle('');
+      setToDo('');
+
+      // Call the callback function to update the data in the parent component
+      props.updateFormData(data);
+    }
+  };
+
+  {/*retrieve data from local storage*/}
+
+  useEffect(() => {
+    const storedData = localStorage.getItem('formData');
+    if (storedData) {
+      const parsedData = JSON.parse(storedData);
+      setFormData(parsedData);
+    }
+  }, []);
+
+
+  const clearLocalStorage = () => {
+    localStorage.clear();
+    setFormData([]); 
+  };
+
+
+  
   return (
     <>
       <section>
-        <main
-          className="position-relative"
-          style={{ height: "100vh" }}
-        >
+        <main className="position-relative" style={{ height: "100vh" }}>
+          <form onSubmit={handleSubmit}>   
           <div
             className="card p-5 position-absolute"
             style={{
@@ -26,7 +97,9 @@ const Form = () => {
                 type="date"
                 className="form-control"
                 id="exampleFormControlInput1"
-                value=""
+                name="date"
+                value={date}
+                onChange={(e) => setDate(e.target.value)}
               />
             </div>
             <div className="mb-2 mx-5">
@@ -38,7 +111,9 @@ const Form = () => {
                 className="form-control"
                 id="exampleFormControlInput2"
                 placeholder="Birthday-to-do"
-                value=""
+                name="title"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
               />
             </div>
             <div className="mb-2 mx-5">
@@ -53,38 +128,59 @@ const Form = () => {
                 id="exampleFormControlTextarea1"
                 rows="3"
                 placeholder="Bake Cake/ Get Confetti/..."
-                value=""
+                name="toDo"
+                value={toDo}
+                onChange={(e) => setToDo(e.target.value)}
               ></textarea>
+            </div>
+            <div
+              className={`d-flex flex-row float-left ${
+                showAlert ? "d-none" : ""
+              }`}
+              style={{ color: "success" }}
+            >
+              <p className="text-success" style={{ fontSize: "0.7rem" }}>
+                &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;{" "}
+                <i className="bi bi-check-square text-success"></i>
+                &nbsp; Your to-Do has been successfully added
+              </p>
+            </div>
+            <div
+              className={`d-flex flex-row float-left ${
+                showError ? "d-none" : ""
+              }`}
+              style={{ color: "danger" }}
+            >
+              <p className="text-danger" style={{ fontSize: "0.7rem" }}>
+                &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;{" "}
+                <i className="bi bi-x-circle text-danger"></i>
+                &nbsp; Please fill in all the required fields before proceeding
+              </p>
             </div>
             <div className="mx-5 d-flex flex-row gap-2" id="buttonAppear">
               <button
-                type="button"
+                type="submit"
                 className="btn btn-success px-3"
               >
                 + Add
               </button>
-              <button type="button" className="btn btn-danger px-3">
+              <button type="button"  onClick={clearLocalStorage} className="btn btn-danger px-3">
                 <i className="bi bi-trash"></i> Delete All
               </button>
             </div>
-            <div
-              id="alertDiv"
-              className="d-flex flex-row justify-content-center mt-2 p-1"
-              style={{ color: "white" }}
-            >
-              <p
-                className="text-bg-success"
-                id="successAlert"
-                style={{ fontSize: "0.8rem" }}
-              >
-                &check; You have successfully added a to-Do
-              </p>
-            </div>
           </div>
-        </main>
+          </form>
+          </main>
+        {/*Generate a Card with User Input*/}
       </section>
     </>
   );
+};
+
+
+// Add prop type validation
+Form.propTypes = {
+  updateFormData: PropTypes.func.isRequired,
 };
 
 export default Form;

@@ -1,17 +1,14 @@
-import DynamicCards from './components/cardsection'
-import Form from "./components/form";
-import NavBar from "./components/navbar";
+import NavBar from './components/navbar';
+import ToDos from './components/todos'
 
 const App = () => {
-    return(
-        <>
-        <NavBar />
-        <Form />
-        <DynamicCards />
-        </>
-    )
+
+  return (
+    <>
+      <NavBar />
+      <ToDos/> 
+    </>
+  );
 };
-
-
 
 export default App;
